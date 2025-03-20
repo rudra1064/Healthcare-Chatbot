@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        #chatbox {
+            width: 50%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px gray;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .message {
+            text-align: left;
+            margin: 5px;
+        }
+        .bot {
+            color: green;
+        }
+        .user {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Healthcare Chatbot</h1>
+    <div id="chatbox">
+        <div id="chatlog"></div>
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let userMessage = document.getElementById("userInput").value;
+            if (!userMessage) return;
+            
+            let chatlog = document.getElementById("chatlog");
+            chatlog.innerHTML += `<p class="message user"><strong>You:</strong> ${userMessage}</p>`;
+            document.getElementById("userInput").value = "";
+
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatlog.innerHTML += `<p class="message bot"><strong>Bot:</strong> ${data.reply}</p>`;
+            });
+        }
+    </script>
+
+</body>
+</html>
