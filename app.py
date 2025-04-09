@@ -9,6 +9,7 @@ def chatbot_response(user_input):
     responses = {
         "hi": "Hello! How can I assist you today?",
         "hello": "Hello! How can I assist you today?",
+        "timing":"Hospital opens Every day from 9am to 10pm",
         "appointment": "You can book an appointment by calling +1234567890 or visiting our website.",
         "emergency": "In case of an emergency, call 911 immediately or visit the nearest hospital.",
         "services": "We offer General Checkups, Surgery, Pediatrics, and more. What do you need help with?",
