@@ -1,79 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthcare Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-        }
-        #chatbox {
-            width: 50%;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px gray;
-        }
-        input {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            padding: 10px;
-            border: none;
-            background: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .message {
-            text-align: left;
-            margin: 5px;
-        }
-        .bot {
-            color: green;
-        }
-        .user {
-            color: blue;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sunrise Hospital</title>
+  <style>
+    /* General Reset & Fonts */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://i.pinimg.com/originals/ed/87/e4/ed87e4d3897231093453219c366c5d9d.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      background-color: rgba(0, 123, 255, 0.9);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .navbar h1 {
+      font-size: 2.5em;
+    }
+    .navbar p {
+      font-size: 1.1em;
+      margin-top: 5px;
+    }
+
+    /* Sections */
+    section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      margin-bottom: 40px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+      color: #007bff;
+    }
+
+    /* About Section */
+    #about p {
+      font-size: 1.1em;
+      text-align: justify;
+      line-height: 1.8;
+    }
+
+    /* Our Hospital Section */
+    #our-hospital {
+      text-align: center;
+    }
+    #our-hospital img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+
+    /* Doctors Section */
+    #doctors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .doctor-card {
+      background: #fff;
+      border-radius: 10px;
+      width: 300px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .doctor-card:hover {
+      transform: translateY(-5px);
+    }
+    .doctor-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #007bff;
+    }
+    .doctor-card h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+    .doctor-card p {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    /* Chatbot Section */
+    #chatbox {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 40px auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #chatlog {
+      max-height: 300px;
+      overflow-y: auto;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .user {
+      background-color: #e7f3ff;
+      color: #007bff;
+    }
+    .bot {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    #userInput {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 123, 255, 0.9);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation / Header -->
+  <header class="navbar">
+    <h1>Sunrise Hospital</h1>
+    <p>Your Health, Our Priority</p>
+  </header>
 
-    <h1>Healthcare Chatbot</h1>
-    <div id="chatbox">
-        <div id="chatlog"></div>
-        <input type="text" id="userInput" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <p>
+      Sunrise Hospital is dedicated to providing comprehensive healthcare services with a compassionate approach. At Sunrise Hospital, we understand that every patient is unique, and we are committed to delivering personalized care that meets the diverse needs of our community. Our mission is to provide a healing environment where patients feel supported, respected, and empowered to achieve optimal health.
+      <br /><br />
+      <strong>State-of-the-Art Facilities & Advanced Technology</strong><br />
+      Our hospital is equipped with cutting-edge diagnostic and treatment facilities designed to deliver the highest standard of care. From advanced imaging systems and minimally invasive surgical techniques to the latest in telemedicine and electronic health records, we continuously invest in technology that enhances patient outcomes and improves the overall healthcare experience.
+      <br /><br />
+      <strong>Experienced and Compassionate Staff</strong><br />
+      At the heart of our hospital is a team of highly skilled physicians, nurses, and support staff who bring decades of experience and a deep sense of compassion to every patient interaction. Our dedicated professionals work collaboratively across specialties to ensure that every patient receives a comprehensive treatment plan tailored to their specific needs.
+      <br /><br />
+      <strong>Commitment to Medical Research and Education</strong><br />
+      We believe that innovation is key to advancing healthcare. Sunrise Hospital actively participates in medical research and partners with leading academic institutions to pioneer new treatments and technologies. Our commitment to education also extends to ongoing training and professional development for our staff, ensuring that we remain at the forefront of medical advancements.
+      <br /><br />
+      <strong>Community-Focused Care</strong><br />
+      We are more than just a healthcare provider—we are a vital part of our community. Sunrise Hospital strives to build lasting relationships with the people we serve, offering community outreach programs, preventive health screenings, and educational seminars to promote wellness and proactive care.
+      <br /><br />
+      <strong>Excellence in Every Aspect</strong><br />
+      From routine check-ups and emergency services to specialized surgeries and chronic disease management, our comprehensive range of services is designed to cover every aspect of patient care. At Sunrise Hospital, we are driven by a passion for excellence, ensuring that every facet of our operations is geared toward enhancing patient experiences and outcomes.
+      <br /><br />
+      <strong>Your Health, Our Priority</strong><br />
+      Whether you are seeking preventive care, advanced treatment, or compassionate support during challenging times, Sunrise Hospital is here for you. Our commitment to quality, innovation, and empathy makes us a beacon of hope and healing for families across the region.
+    </p>
+  </section>
+
+  <!-- Our Hospital Section -->
+  <section id="our-hospital">
+    <h2 class="section-title">Our Hospital</h2>
+    <img src="https://dims.healthgrades.com/dims3/MMH/93e306d/2147483647/strip/true/crop/578x420+31+0/resize/550x400!/quality/75/?url=https://ucmscdn.healthgrades.com/e0/98/be75368646fba39199a10e05ab8e/sunrise-20hospital-20and-20medical-20center-7ea9bc-png" alt="Sunrise Hospital Building" />
+  </section>
+
+  <!-- Doctors Section -->
+  <section id="doctors">
+    <h2 class="section-title">Our Doctors</h2>
+    <div class="doctor-card">
+      <img src="https://i.pinimg.com/originals/b9/16/e4/b916e46bd786198bf479cd3e792df978.jpg" alt="Doctor 1" />
+      <h3>Dr. Kanad Mithawala</h3>
+      <p>Cardiologist</p>
     </div>
+    <div class="doctor-card">
+      <img src="https://i.pinimg.com/originals/2b/35/54/2b3554ba8d5de494f18b9811a4b59353.jpg" alt="Doctor 2" />
+      <h3>Dr. Aishwarya Kolhe</h3>
+      <p>Neurologist</p>
+    </div>
+    <div class="doctor-card">
+      <img src="https://i.pinimg.com/originals/f2/2b/fc/f22bfcc95d9e3cbfd9ee7b556b9a8a1f.jpg" alt="Doctor 3" />
+      <h3>Dr. Sara Khan</h3>
+      <p>Pediatrician</p>
+    </div>
+    <div class="doctor-card">
+      <img src="https://i.pinimg.com/originals/ad/13/36/ad133602e0299b163056c45e403648a2.jpg" alt="Doctor 4" />
+      <h3>Dr. Tejas Black</h3>
+      <p>General Surgeon</p>
+    </div>
+  </section>
 
-    <script>
-        function sendMessage() {
-            let userMessage = document.getElementById("userInput").value;
-            if (!userMessage) return;
-            
-            let chatlog = document.getElementById("chatlog");
-            chatlog.innerHTML += `<p class="message user"><strong>You:</strong> ${userMessage}</p>`;
-            document.getElementById("userInput").value = "";
+  <!-- Chatbot Section -->
+  <section id="chatbot">
+    <h2 class="section-title">Chat with HEALTIFIER</h2>
+    <div id="chatbox">
+      <div id="chatlog"></div>
+      <input type="text" id="userInput" placeholder="Ask ChatBot Your Queries" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </section>
 
-            fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: userMessage })
-            })
-            .then(response => response.json())
-            .then(data => {
-                chatlog.innerHTML += `<p class="message bot"><strong>Bot:</strong> ${data.reply}</p>`;
-            });
-        }
-    </script>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Sunrise Hospital. All Rights Reserved.</p>
+  </footer>
 
+  <!-- Chatbot Script -->
+  <script>
+    function sendMessage() {
+      let userInputElem = document.getElementById("userInput");
+      let userMessage = userInputElem.value;
+      if (!userMessage) return;
+      
+      let chatlog = document.getElementById("chatlog");
+      chatlog.innerHTML += `<p class="message user"><strong>You:</strong> ${userMessage}</p>`;
+      userInputElem.value = "";
+
+      fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage })
+      })
+      .then(response => response.json())
+      .then(data => {
+        chatlog.innerHTML += `<p class="message bot"><strong>Bot:</strong> ${data.reply}</p>`;
+        chatlog.scrollTop = chatlog.scrollHeight;
+      });
+    }
+  </script>
 </body>
 </html>
